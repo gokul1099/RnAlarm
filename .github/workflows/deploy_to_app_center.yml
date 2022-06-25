@@ -2,8 +2,8 @@ name: Deploy-Android-TEST
 
 on:
   push:
-    tags:
-      - 'v[0-9]+.[0-9]+.[0-9]+([0-9]+)'
+    branches:
+      - '**'
     
 env:
   APP_CENTER_TOKEN: ${{ secrets.APP_CENTER_TOKEN_MYAPP_ANDROID_TEST }}  
