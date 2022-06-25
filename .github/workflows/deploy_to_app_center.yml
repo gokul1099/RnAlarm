@@ -36,11 +36,10 @@ jobs:
         run: cd android && ./gradlew assembleRelease --no-daemon
 
       - name: Upload to App Center
-        uses: wzieba/AppCenter-Github-Action@v1
+        uses: devussy/AppCenter-Distribute-Github-Action@v1.0.5
         with:
           appName: ${{ env.APP_NAME }}
           token: ${{ env.APP_CENTER_TOKEN }}
           group: ${{ env.TESTING_GROUP }}
           file: ${{ env.UPLOAD_FILE }}
-          notifyTesters: true
-          debug: false
+          silent: false
