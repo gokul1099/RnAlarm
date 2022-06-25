@@ -11,11 +11,10 @@ interface Props {
 
 const TabIcon: React.FC<Props> = props => {
     const { name, active } = props
-    console.log(active, name)
     return (
         <View style={[styles.container, { backgroundColor: active ? "black" : "#fff" }]}>
             <Ripple style={styles.ripple} active={active}>
-                <Icons type="materialCommunity" name={name} color={active ? "#fff" : "red"} size={30} />
+                <Icons type="materialCommunity" name={name} color={active ? "#fff" : "black"} size={30} />
             </Ripple>
         </View>
     )

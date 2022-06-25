@@ -8,7 +8,6 @@ interface AlarmProps {
 
 const Alarm = (props: AlarmProps) => {
     const { theme } = props
-    console.log(theme, "theme")
     return (
         <View>
             <Text>Alarm</Text>
