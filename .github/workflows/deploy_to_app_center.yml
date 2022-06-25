@@ -7,7 +7,7 @@ on:
     
 env:
   APP_CENTER_TOKEN: ${{ secrets.APP_CENTER_TOKEN_MYAPP_ANDROID_TEST }}  
-  APP_NAME: ${{ 'MyApp-Android/ENV_TEST'  }}  
+  APP_NAME: ${{ 'My_Own_Apps/ENV_TEST'  }}  
   TESTING_GROUP: ${{  'ENV_TEST'  }} 
   UPLOAD_FILE: ${{ 'android/app/build/outputs/apk/release/app-release.apk'  }}  
   
@@ -36,10 +36,11 @@ jobs:
         run: cd android && ./gradlew assembleRelease --no-daemon
 
       - name: Upload to App Center
-        uses: devussy/AppCenter-Distribute-Github-Action@v1.0.5
+        uses: wzieba/AppCenter-Github-Action@v1
         with:
           appName: ${{ env.APP_NAME }}
           token: ${{ env.APP_CENTER_TOKEN }}
           group: ${{ env.TESTING_GROUP }}
           file: ${{ env.UPLOAD_FILE }}
-          silent: false
+          notifyTesters: true
+          debug: false
