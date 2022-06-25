@@ -9,7 +9,7 @@ env:
   APP_CENTER_TOKEN: ${{ secrets.APP_CENTER_TOKEN_MYAPP_ANDROID_TEST }}  
   APP_NAME: ${{ 'MyApp-Android/ENV_TEST'  }}  
   TESTING_GROUP: ${{  'ENV_TEST'  }} 
-  UPLOAD_FILE: ${{ 'android/app/build/outputs/apk/app-release.apk'  }}  
+  UPLOAD_FILE: ${{ 'android/app/build/outputs/apk/release/app-release.apk'  }}  
   
 
 jobs:
@@ -34,8 +34,6 @@ jobs:
         
       - name: Generate App APK
         run: cd android && ./gradlew assembleRelease --no-daemon
-#       - name: Build android
-#         run:  cd android && ./gradlew assembleRelease
 
       - name: Upload to App Center
         uses: wzieba/AppCenter-Github-Action@v1
