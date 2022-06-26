@@ -2,10 +2,14 @@ import React, { useEffect, useState, useContext } from 'react';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { Theme } from '../Config/Theme';
 const STORAGE_KEY = 'THEME_ID';
-const ThemeContext = React.createContext({});
+interface ContextType {
+    themeID: string,
+    setThemeID: (value: string) => void
+}
+export const ThemeContext = React.createContext<ContextType>({});
 
 export const ThemeContextProvider = ({ children }: any) => {
-    const [themeID, setThemeID] = useState("");
+    const [themeID, setThemeID] = useState<string>("");
     useEffect(() => {
         (async () => {
             const storedThemeID = await AsyncStorage.getItem(STORAGE_KEY);
@@ -25,27 +29,35 @@ export const ThemeContextProvider = ({ children }: any) => {
 };
 
 
-// export function withTheme(Component: any) {
-//     return props => {
-//         const { setThemeID, themeID } = useContext(ThemeContext);
-//         const getTheme = (themeID: String) => Theme[themeID]
-//         const setTheme = (themeId: String) => {
-//             AsyncStorage.setItem(STORAGE_KEY, themeId);
-//             setThemeID(themeId);
-//         };
-//         const getAppTheme = (themeId: String) => {
-//             var theme = getTheme(themeId);
-//             return { ...theme };
-//         };
+export function withTheme(Component: any) {
+    return (props: any) => {
+        const { themeID, setThemeID } = useContext(ThemeContext);
+        const getTheme = (themeID: String) => {
+            return Theme.themeID
+        }
+        const setTheme = (themeId: string) => {
+            AsyncStorage.setItem(STORAGE_KEY, themeId);
+            setThemeID(themeId);
+        };
+        const getAppTheme = (themeId: string) => {
+            var theme = getTheme(themeId);
+            if (theme) {
+                return { ...theme };
+            }
+            else {
+                return { ...Theme['LIGHT'] }
+            }
 
-//         return (
-//             <Component
-//                 {...props}
-//                 themes={Theme}
-//                 theme={getAppTheme(themeID)}
-//                 setTheme={setTheme}
-//                 themeID={themeID}
-//             />
-//         );
-//     };
-// }
+        };
+
+        return (
+            <Component
+                {...props}
+                themes={Theme}
+                theme={getAppTheme(themeID)}
+                setTheme={setTheme}
+                themeID={themeID}
+            />
+        );
+    };
+}

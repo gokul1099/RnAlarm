@@ -1,16 +1,23 @@
 import { StyleSheet, Text, View } from 'react-native'
 import React from 'react'
+import { withTheme } from '../../utils/ThemeManager'
 
-const Stopwatch = () => {
+interface StopWatchProps {
+    theme: any
+}
+const Stopwatch = (props: StopWatchProps) => {
+    const { theme } = props
     return (
-        <View>
-            <Text>Stopwatch
-
-            </Text>
+        <View style={[styles.container, { backgroundColor: theme.shark }]}>
+            <Text>Stopwatch </Text>
         </View>
     )
 }
 
-export default Stopwatch
+export default withTheme(Stopwatch)
 
-const styles = StyleSheet.create({})
+const styles = StyleSheet.create({
+    container: {
+        flex: 1
+    }
+})

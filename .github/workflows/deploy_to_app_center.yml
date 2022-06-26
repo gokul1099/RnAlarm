@@ -9,7 +9,7 @@ env:
   APP_CENTER_TOKEN: ${{ secrets.APP_CENTER_TOKEN_MYAPP_ANDROID_TEST }}  
   APP_NAME: ${{ 'My_Own_Apps/ENV_TEST'  }}  
   TESTING_GROUP: ${{  'ENV_TEST'  }} 
-  UPLOAD_FILE: ${{ 'android/app/build/outputs/apk/release/app-release.apk'  }}  
+  UPLOAD_FILE: ${{ 'android/app/build/outputs/apk/release/app-armeabi-v7a-release.apk'  }}  
   
 
 jobs:

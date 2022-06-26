@@ -1,9 +1,14 @@
 import { StyleSheet, Text, View } from 'react-native'
 import React from 'react'
+import { withTheme } from '../../utils/ThemeManager'
 
-const Bedtime = () => {
+interface BedTimeProps {
+    theme: any
+}
+const Bedtime = (props: BedTimeProps) => {
+    const { theme } = props
     return (
-        <View>
+        <View style={[styles.container, { backgroundColor: theme.shark }]}>
             <Text>Bedtime
 
             </Text>
@@ -11,6 +16,10 @@ const Bedtime = () => {
     )
 }
 
-export default Bedtime
+export default withTheme(Bedtime)
 
-const styles = StyleSheet.create({})
+const styles = StyleSheet.create({
+    container: {
+        flex: 1
+    }
+})

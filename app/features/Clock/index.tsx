@@ -1,9 +1,13 @@
 import { StyleSheet, Text, View } from 'react-native'
 import React from 'react'
-
-const Clock = () => {
+import { withTheme } from "../../utils/ThemeManager"
+interface ClockProps {
+    theme: any
+}
+const Clock = (props: ClockProps) => {
+    const { theme } = props
     return (
-        <View>
+        <View style={[styles.container, { backgroundColor: theme.shark }]}>
             <Text>Clock
 
             </Text>
@@ -11,6 +15,10 @@ const Clock = () => {
     )
 }
 
-export default Clock
+export default withTheme(Clock)
 
-const styles = StyleSheet.create({})
+const styles = StyleSheet.create({
+    container: {
+        flex: 1
+    }
+})
