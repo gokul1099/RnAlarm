@@ -5,10 +5,11 @@ import Animated, { runOnJS, useAnimatedGestureHandler, useAnimatedStyle, useShar
 interface RippleProp {
     style?: StyleProp<ViewStyle>,
     onTap?: () => void,
-    active?: Boolean
+    active?: Boolean,
+    children?: any
 
 }
-const Ripple: React.FC<RippleProp> = ({ style, onTap, children, active }) => {
+const Ripple = ({ style, onTap, children, active }: RippleProp) => {
 
     const scale = useSharedValue(0)
     const rippleOpacity = useSharedValue(1)
@@ -39,7 +40,7 @@ const Ripple: React.FC<RippleProp> = ({ style, onTap, children, active }) => {
         }
     })
     return (
-        <TapGestureHandler onGestureEvent={tapGestureEvent}>
+        <TapGestureHandler onHandlerStateChange={tapGestureEvent}>
             <Animated.View style={style}>
                 <View>{children}</View>
                 <Animated.View style={rStyle} />

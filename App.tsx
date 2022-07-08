@@ -11,13 +11,15 @@ import { GestureHandlerRootView } from 'react-native-gesture-handler';
 import React from 'react';
 import { Text } from "react-native"
 import Navigator from './app/navigation';
+import Alarm from "./app/features/Alarm"
 import { ThemeContextProvider } from "./app/utils/ThemeManager"
 const App = () => {
 
   return (
     <ThemeContextProvider>
       <GestureHandlerRootView style={{ flex: 1 }}>
-        <Navigator />
+        {/* <Navigator /> */}
+        <Alarm />
       </GestureHandlerRootView>
     </ThemeContextProvider>
   );
