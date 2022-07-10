@@ -3,33 +3,35 @@ import React from 'react'
 import { widthPercentageToDP as wp, heightPercentageToDP as hp } from 'react-native-responsive-screen';
 import Icons from '../../../Config/Icons';
 import useToggle from '../../../hooks/useToggle';
-
+import TimeSelector from './TimeSelector';
 interface ExpandProps {
     time?: string,
     toggle?: boolean,
     theme: any,
     index: number,
     currentIndex: number | null,
-    updateState: Function
+    updateState: Function,
+    toggleModal: Function,
 
 }
 
-const Expand = ({ time, toggle, theme, index, currentIndex, updateState }: ExpandProps) => {
+const Expand = ({ time, toggle, theme, index, currentIndex, updateState, toggleModal }: ExpandProps) => {
     const styles = Styles(theme)
     const [btn, ToggleBtn] = useToggle(toggle)
     const [expand, ToggleExpand] = useToggle()
     return (
-        // <TapGestureHandler onGestureEvent={tapGestureEvent}>
         <TouchableOpacity style={[styles.container]} onPress={() => {
             ToggleExpand()
             updateState()
         }}
             activeOpacity={1}>
-            {/* <View style={styles.container}> */}
+
             <View style={styles.innerContainer}>
-                <Text style={styles.text1}>{time}</Text>
+                <TouchableHighlight onPress={() => toggleModal()}>
+                    <Text style={styles.text1}>{time}</Text>
+                </TouchableHighlight>
                 <Pressable onPress={ToggleExpand} style={styles.expandBtn}>
-                    <Icons name={expand ? "chevron-up" : "chevron-down"} color="gray" type="materialCommunity" size={20} />
+                    <Icons name={index === currentIndex ? "chevron-up" : "chevron-down"} color="gray" type="materialCommunity" size={20} />
                 </Pressable>
             </View>
             <View style={styles.innerContainer}>
@@ -41,15 +43,10 @@ const Expand = ({ time, toggle, theme, index, currentIndex, updateState }: Expan
             </View>
             {
                 index === currentIndex && (
-                    <View style={styles.expandContainer}>
-                    </View>
+                    <View style={styles.expandContainer}></View>
                 )
             }
-            {/* </View> */}
-
         </TouchableOpacity>
-
-        // </TapGestureHandler > 
     )
 }
 
