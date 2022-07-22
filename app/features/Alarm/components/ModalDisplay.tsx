@@ -1,6 +1,7 @@
 import { StyleSheet, Text, View, Modal, TouchableHighlight } from 'react-native'
 import React from 'react'
-import TimeSelector from './TimeSelector';
+import TimeSelector from './TimeSelector/TimeSelector';
+import TimePicker from './TimePicker/TimePicker';
 import { widthPercentageToDP as wp, heightPercentageToDP as hp } from 'react-native-responsive-screen';
 interface ModalProp {
     visible: boolean,
@@ -32,7 +33,7 @@ const Styles = (theme: any) => StyleSheet.create({
     },
 
     modalView: {
-        backgroundColor: theme.rolling_stone,
+        backgroundColor: "white",//theme.rolling_stone,
         borderRadius: 20,
         alignItems: "center",
         // shadowColor: "#000",
@@ -40,8 +41,8 @@ const Styles = (theme: any) => StyleSheet.create({
             width: 0,
             height: 2
         },
-        height: hp(30),
-        width: wp(70),
+        height: hp(50),
+        width: wp(90),
         shadowOpacity: 0.25,
         shadowRadius: 4,
         elevation: 5

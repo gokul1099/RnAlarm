@@ -21,7 +21,7 @@ const Alarm = (props: AlarmProps) => {
     const { theme } = props
     const styles = Styles(theme)
     const [currentIndex, setCurrentIndex] = React.useState<any>(null)
-    const ref = React.useRef<TransitioningView | null>()
+    const ref = React.useRef<TransitioningView | null>(null)
     const [modalShow, setModalShow] = useToggle()
     const updateState = (index: any, currentIndex: any) => {
         ref.current?.animateNextTransition()
@@ -49,7 +49,6 @@ const Alarm = (props: AlarmProps) => {
 
                 <Text style={styles.addBtnText}>+</Text>
             </TouchableHighlight>
-
         </Transitioning.View>
     )
 }

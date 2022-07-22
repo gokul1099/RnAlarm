@@ -3,7 +3,7 @@ import React from 'react'
 import { widthPercentageToDP as wp, heightPercentageToDP as hp } from 'react-native-responsive-screen';
 import Icons from '../../../Config/Icons';
 import useToggle from '../../../hooks/useToggle';
-import TimeSelector from './TimeSelector';
+import TimeSelector from './TimeSelector/TimeSelector';
 interface ExpandProps {
     time?: string,
     toggle?: boolean,
