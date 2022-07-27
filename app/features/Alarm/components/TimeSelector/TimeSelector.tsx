@@ -1,63 +1,54 @@
-import { StyleSheet, Text, View, FlatList, TouchableHighlight } from 'react-native'
-import React, { useState } from 'react'
-import { widthPercentageToDP as wp, heightPercentageToDP as hp } from 'react-native-responsive-screen'
-import Animated, { useSharedValue } from "react-native-reanimated"
-import SelectorItem from "./SelectorItem"
+import { StyleSheet, View, Dimensions, Animated, Text } from 'react-native'
+import React, { useRef, useState } from 'react'
+import { heightPercentageToDP as hp, widthPercentageToDP as wp } from 'react-native-responsive-screen';
+import SelectorItem from './SelectorItem';
+
 
 interface TimeSelectorProp {
     theme: any,
     setVisible: any
 }
+const { width, height } = Dimensions.get("window")
+
+const ITEM_SIZE = height * 0.09
 
 const TimeSelector = ({ theme, setVisible }: TimeSelectorProp) => {
     const styles = Styles(theme)
-    const scaleValue = useSharedValue(0)
     const hours = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12]
     const minutes = new Array(60).fill(10)
-
+    const scrollYHour = useRef(new Animated.Value(0)).current
+    const scrollYMinute = useRef(new Animated.Value(0)).current
+    const [selectedHour, setSelectedHour] = useState(hours[0])
+    const [selectedMinute, setSelectedMinute] = useState(hours[0])
     return (
-        <>
-            <View style={styles.container}>
-                <View style={styles.pickerContainer}>
-                    <Animated.FlatList data={hours}
-                        renderItem={({ item, index }) => (<SelectorItem index={index} item={item} scaleValue={scaleValue} />)}
-                        keyExtractor={(index) => index.toString()}
-                        showsVerticalScrollIndicator={false}
-                        showsHorizontalScrollIndicator={false} />
+        <View>
+            <View style={styles.pickerContainer}>
+                <View style={{ height: height * 0.25 }}>
+                    <SelectorItem data={hours} scrollY={scrollYHour} selected={(val: number) => setSelectedHour(val)} />
                 </View>
-                <View style={styles.pickerContainer}>
-                    <Animated.FlatList data={hours}
-                        renderItem={({ item, index }) => (<SelectorItem index={index} item={item} scaleValue={scaleValue} />)}
-                        keyExtractor={(index) => index.toString()}
-                        showsVerticalScrollIndicator={false}
-                        showsHorizontalScrollIndicator={false} />
+                <View style={{ height: height * 0.25, justifyContent: "center", alignItems: "center" }}>
+                    <Text style={{ fontSize: 60, color: "black", paddingTop: 10 }}>:</Text>
                 </View>
-
+                <View style={{ height: height * 0.25 }}>
+                    <SelectorItem data={hours} scrollY={scrollYMinute} selected={(val: number) => setSelectedMinute(val)} />
+                </View>
             </View>
-            {/* <View style={styles.modalBtnContainer}>
-                <TouchableHighlight style={styles.modalBtn} underlayColor={"white"} onPress={() => setVisible()}><Text>Cancel</Text></TouchableHighlight>
-                <TouchableHighlight style={styles.modalBtn} underlayColor={"white"} onPress={() => setVisible()}><Text>Ok</Text></TouchableHighlight>
-            </View> */}
-        </>
+        </View>
+
     )
 }
 
 export default TimeSelector
 
 const Styles = (theme: any) => StyleSheet.create({
-    container: {
-        height: "100%",
+    pickerContainer: {
+        height: ITEM_SIZE * 3,
         width: "100%",
         flexDirection: "row",
-        justifyContent: "center",
-        alignItems: 'center',
+        justifyContent: "space-evenly",
+
     },
-    pickerContainer: {
-        width: hp(20),
-        height: hp(30),
-        justifyContent: "center",
-        alignItems: "center"
-    },
+
     modalBtnContainer: {
         flexDirection: "row",
     },
@@ -66,4 +57,5 @@ const Styles = (theme: any) => StyleSheet.create({
         borderRadius: 10,
         marginHorizontal: 20
     },
+
 })
