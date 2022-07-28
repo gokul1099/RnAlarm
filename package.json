@@ -15,6 +15,7 @@
     "@react-navigation/native": "^6.0.10",
     "react": "17.0.2",
     "react-native": "0.68.2",
+    "react-native-alarm-manager": "^1.2.1",
     "react-native-anchor-point": "^1.0.6",
     "react-native-gesture-handler": "^2.4.2",
     "react-native-reanimated": "^2.8.0",

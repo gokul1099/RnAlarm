@@ -1,0 +1,1 @@
+{"alarm_activate": true, "alarm_icon": "", "alarm_id": 1, "alarm_noti_removable": true, "alarm_sound": "", "alarm_sound_loop": true, "alarm_text": "text", "alarm_time": "08:15:00", "alarm_title": "title", "alarm_vibration": true}

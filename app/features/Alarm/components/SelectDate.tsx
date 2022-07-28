@@ -7,8 +7,8 @@ interface InputProp {
 }
 const SelectDate = ({ title, setInput }: InputProp) => {
     const today = new Date()
-    const options = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
-    const [currDate, setCurrDate] = useState(today.toLocaleDateString("en-us", options))
+    const options = { year: 'numeric', month: 'short', day: 'numeric' };
+    const [currDate, setCurrDate] = useState(new Date().toLocaleString('en-us', { month: 'long', year: 'numeric', day: 'numeric' }))
     return (
         <View style={styles.container}>
             <Text style={styles.title}>Date</Text>

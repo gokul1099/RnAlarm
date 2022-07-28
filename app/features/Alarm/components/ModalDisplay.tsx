@@ -2,33 +2,46 @@ import { StyleSheet, Text, View, Modal, TouchableOpacity } from 'react-native'
 import React, { useState } from 'react'
 import TimeSelector from './TimeSelector/TimeSelector';
 import { widthPercentageToDP as wp, heightPercentageToDP as hp } from 'react-native-responsive-screen';
-import SelectDate from './SelectDate';
 import Separator from './Separator';
+import { scheduleAlarm } from "../../../utils/AlarmManager"
+
 interface ModalProp {
     visible: boolean,
     theme: object,
     setVisible: Function
 }
+
+
 const ModalDisplay = ({ visible, theme, setVisible }: ModalProp) => {
     const styles = Styles(theme)
 
     const today = new Date()
     const [date, setDate] = useState<string>(today.toISOString().split('T')[0])
+    const alarm = {
+        alarm_time: "20:46:00",
+        alarm_title: 'title',
+        alarm_text: 'text',
+        alarm_sound: '',
+        alarm_icon: '',
+        alarm_sound_loop: true,
+        alarm_vibration: true,
+        alarm_noti_removable: true,
+        alarm_activate: true
+    };
 
     return (
         <Modal animationType="fade" transparent={true} visible={visible} onRequestClose={() => setVisible()} >
             <View style={styles.centeredView}>
                 <View style={styles.modalView}>
-                    <SelectDate title='Date' setInput={setDate} />
+                    {/* <SelectDate title='Date' setInput={setDate} /> */}
                     <Separator />
                     <View style={styles.timeTitle}>
-                        <View><Text style={styles.title}>Hours</Text></View>
-                        <View><Text style={styles.title}>Minutes</Text></View>
+                        <Text style={styles.title}>At what time you want set Alarm? </Text>
                     </View>
                     <Separator />
                     <TimeSelector theme={theme} setVisible={setVisible} />
-                    <TouchableOpacity style={styles.button}>
-                        <Text style={styles.title}>Done</Text>
+                    <TouchableOpacity style={styles.button} onPress={() => scheduleAlarm(alarm)}>
+                        <Text style={styles.title}>Set Alarm</Text>
                     </TouchableOpacity>
                 </View>
             </View>
@@ -48,12 +61,13 @@ const Styles = (theme: any) => StyleSheet.create({
     title: {
         color: "black",
         fontSize: 25,
-        textTransform: "uppercase",
+        textTransform: "capitalize",
+        textAlign: "center",
         fontWeight: "bold"
 
     },
     timeTitle: {
-        width: "100%",
+        width: "80%",
         flexDirection: "row",
         justifyContent: "space-evenly",
     },
@@ -78,6 +92,7 @@ const Styles = (theme: any) => StyleSheet.create({
         height: 60,
         backgroundColor: "red",
         marginHorizontal: 10,
+        marginVertical: 40,
         borderRadius: 10,
         justifyContent: "center",
         alignItems: "center"

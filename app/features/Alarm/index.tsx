@@ -1,11 +1,12 @@
 import { StyleSheet, Text, View, Modal, TouchableHighlight, FlatList } from 'react-native';
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import { withTheme } from "../../utils/ThemeManager"
 import Expand from './components/Expand';
 import { Transition, Transitioning, TransitioningView } from "react-native-reanimated"
 import useToggle from '../../hooks/useToggle';
 import { widthPercentageToDP as wp } from 'react-native-responsive-screen';
 import ModalDisplay from './components/ModalDisplay';
+import { getAllAlarm } from "../../utils/AlarmManager"
 interface AlarmProps {
     theme: any
 }
@@ -23,11 +24,15 @@ const Alarm = (props: AlarmProps) => {
     const [currentIndex, setCurrentIndex] = React.useState<any>(null)
     const ref = React.useRef<TransitioningView | null>(null)
     const [modalShow, setModalShow] = useToggle()
+    const [data, setData] = useState([])
     const updateState = (index: any, currentIndex: any) => {
         ref.current?.animateNextTransition()
         setCurrentIndex(index === currentIndex ? null : index)
     }
-    const data = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]
+    useEffect(() => {
+        getAllAlarm(setData)
+    }, [data])
+
     return (
 
         <Transitioning.View ref={ref} style={[styles.container, { backgroundColor: theme.shark }]} transition={transition}>
@@ -36,9 +41,9 @@ const Alarm = (props: AlarmProps) => {
 
             <FlatList data={data}
                 contentContainerStyle={{ paddingBottom: 120 }}
-                renderItem={({ item, index }) => {
+                renderItem={({ item, index }: { item: any, index: number }) => {
                     return (<View key={index} >
-                        <Expand time="6:20 am" toggle={true} theme={theme} index={index} currentIndex={currentIndex} updateState={() => updateState(index, currentIndex)} toggleModal={setModalShow} />
+                        <Expand time={item?.alarm_time} toggle={item.alarm_activate} theme={theme} index={index} currentIndex={currentIndex} updateState={() => updateState(index, currentIndex)} toggleModal={setModalShow} />
                     </View>)
                 }} />
             <TouchableHighlight style={styles.floatingButton}
