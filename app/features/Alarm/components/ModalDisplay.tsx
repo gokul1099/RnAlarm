@@ -31,20 +31,21 @@ const ModalDisplay = ({ visible, theme, setVisible }: ModalProp) => {
 
     return (
         <Modal animationType="fade" transparent={true} visible={visible} onRequestClose={() => setVisible()} >
-            <View style={styles.centeredView}>
+            <TouchableOpacity style={styles.centeredView} onPress={() => setVisible()}>
                 <View style={styles.modalView}>
                     {/* <SelectDate title='Date' setInput={setDate} /> */}
-                    <Separator />
+                    {/* <Separator />
                     <View style={styles.timeTitle}>
                         <Text style={styles.title}>At what time you want set Alarm? </Text>
                     </View>
-                    <Separator />
+                    <Separator /> */}
+                    <View style={{ marginBottom: 40 }}></View>
                     <TimeSelector theme={theme} setVisible={setVisible} />
                     <TouchableOpacity style={styles.button} onPress={() => scheduleAlarm(alarm)}>
                         <Text style={styles.title}>Set Alarm</Text>
                     </TouchableOpacity>
                 </View>
-            </View>
+            </TouchableOpacity>
         </Modal>
     )
 }

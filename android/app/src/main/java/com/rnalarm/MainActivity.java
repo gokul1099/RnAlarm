@@ -3,7 +3,20 @@ package com.rnalarm;
 import com.facebook.react.ReactActivity;
 import com.facebook.react.ReactActivityDelegate;
 import com.facebook.react.ReactRootView;
+
+import android.content.ComponentName;
+import android.content.Intent;
 import android.os.Bundle;
+
+/**
+ * for react-native-alarm-manager
+ **/
+import android.content.pm.PackageManager;
+import androidx.annotation.Nullable;
+import com.baekgol.reactnativealarmmanager.AlarmModule;
+import com.baekgol.reactnativealarmmanager.util.BootReceiver;
+import com.facebook.react.ReactActivity;
+import com.facebook.react.ReactActivityDelegate;
 
 public class MainActivity extends ReactActivity {
 
@@ -22,13 +35,29 @@ public class MainActivity extends ReactActivity {
    */
   @Override
   protected ReactActivityDelegate createReactActivityDelegate() {
-    return new MainActivityDelegate(this, getMainComponentName());
+    return new MainActivityDelegate(this, getMainComponentName()){
+      @Nullable
+      @Override
+      protected Bundle getLaunchOptions(){
+        Intent intent = getIntent();
+        Bundle bundle = intent.getExtras();
+        if(intent.getBooleanExtra("notiRemovable",true))
+          AlarmModule.stop(this.getContext());
+          return bundle;
+      }
+    };
   }
 
   /**for react navigation */
   @Override
 protected void onCreate(Bundle savedInstanceState) {
-  super.onCreate(null);
+    super.onCreate(null);
+    ComponentName receiver = new ComponentName(this,BootReceiver.class);
+    PackageManager packageManager = this.getPackageManager();
+    packageManager.setComponentEnabledSetting(receiver,
+            PackageManager.COMPONENT_ENABLED_STATE_ENABLED,
+            PackageManager.DONT_KILL_APP);
+
 }
 
   public static class MainActivityDelegate extends ReactActivityDelegate {
